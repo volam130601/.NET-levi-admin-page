@@ -1,0 +1,59 @@
+﻿@model dynamic
+
+@{
+}
+
+<div class="box box-primary">
+    <div class="box-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="firstName">First Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" name="firstName" class="form-control" id="firstName" placeholder="Enter Supplier Name" autofocus>
+                </div>
+                <label class="control-label col-sm-2" for="lastName">Last Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Enter Last Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="email">Email:</label>
+                <div class="col-sm-10">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="birthdate">Birthdate:</label>
+                <div class="col-sm-10">
+                    <input type="date" name="birthdate" class="form-control" id="birthdate" placeholder="Enter Birthdate">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="photo">Photo:</label>
+                <div class="col-sm-10">
+                    <input type="file" name="photo" class="form-control" id="photo" placeholder="Enter Photo">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="note">Note:</label>
+                <div class="col-sm-10">
+                    <textarea name="note" class="form-control" id="note" style="min-height: 160px; resize: vertical" placeholder="Enter Note"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-floppy-disk"></i>
+                        Save
+                    </button>
+
+                    <a href="~/staff" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-log-out"></i>
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

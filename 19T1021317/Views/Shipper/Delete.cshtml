@@ -1,0 +1,44 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Remove Shipper";
+}
+
+
+<div class="box box-danger">
+    <div class="box-title">
+        <h3 style="padding-left: 24px">Are you sure you want to remove this shipper?</h3>
+    </div>
+    <div class="box-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-sm-2">Shipper Name:</label>
+                <p class="form-control-static col-sm-10">
+                    John Doe
+                </p>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">
+                    Phone:
+                </label>
+                <p class="form-control-static col-sm-10">
+                    887-215-8257
+                </p>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i>
+                        Remove
+                    </button>
+
+                    <a href="~/shipper" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-log-out"></i>
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
