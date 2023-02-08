@@ -6493,9 +6493,9 @@
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
-    <Content Include="Views\Category - Copy\Delete.cshtml" />
-    <Content Include="Views\Category - Copy\Edit.cshtml" />
-    <Content Include="Views\Category - Copy\Index.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Delete.cshtml" />
