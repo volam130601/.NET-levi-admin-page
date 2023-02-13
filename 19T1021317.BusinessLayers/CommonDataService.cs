@@ -17,6 +17,11 @@ namespace _19T1021317.BusinessLayers
     public static class CommonDataService
     {
         private static ICountryDAL countryDB;
+        private static ICommonDAL<Supplier> supplierDB;
+        private static ICommonDAL<Customer> customerDB;
+        private static ICommonDAL<Shipper> shipperDB;
+        private static ICommonDAL<Employee> employeeDB;
+        private static ICommonDAL<Category> categoryDB;
 
         /// <summary>
         /// Constructor
@@ -26,7 +31,11 @@ namespace _19T1021317.BusinessLayers
             string connectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
             countryDB = new DataLayers.SQLServer.CountryDAL(connectionString);
-
+            supplierDB = new DataLayers.SQLServer.SupplierDAL(connectionString);
+            customerDB = new DataLayers.SQLServer.CustomerDAL(connectionString);
+            shipperDB = new DataLayers.SQLServer.ShipperDAL(connectionString);
+            employeeDB = new DataLayers.SQLServer.EmployeeDAL(connectionString);
+            categoryDB = new DataLayers.SQLServer.CategoryDAL(connectionString);
         }
 
         #region Handle related to country
