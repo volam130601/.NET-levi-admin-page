@@ -12,8 +12,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>_19T1021317</RootNamespace>
-    <AssemblyName>19T1021317</AssemblyName>
+    <RootNamespace>_19T1021317.Webs</RootNamespace>
+    <AssemblyName>19T1021317.Webs</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -6528,6 +6528,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\19T1021317.BusinessLayers\19T1021317.BusinessLayers.csproj">
+      <Project>{5779b8a3-2f18-4021-a38f-8f29a6e5a713}</Project>
+      <Name>19T1021317.BusinessLayers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\19T1021317.DataLayers\19T1021317.DataLayers.csproj">
+      <Project>{37b7d1b5-bd38-407e-bd2e-9fbdadbd6ad2}</Project>
+      <Name>19T1021317.DataLayers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\19T1021317.DomainModels\19T1021317.DomainModels.csproj">
+      <Project>{6e7c845e-733c-4770-b4ce-8e2150e7a519}</Project>
+      <Name>19T1021317.DomainModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
