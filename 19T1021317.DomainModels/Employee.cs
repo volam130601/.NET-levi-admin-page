@@ -14,41 +14,42 @@ namespace _19T1021317.DomainModels
         /// <summary>
         ///     Employee ID
         /// </summary>
-        private int EmployeeID { get; set; }
+        public int EmployeeID { get; set; }
 
         /// <summary>
         ///     Last Name
         /// </summary>
-        private string LastName { get; set; }
+        public string LastName { get; set; }
 
         /// <summary>
         ///     First Name
         /// </summary>
-        private string FirstName { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>
         ///     Birth Date
         /// </summary>
-        private DateTime BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         /// <summary>
         ///     Photo
         /// </summary>
-        private string Photo { get; set; }
+        public string Photo { get; set; }
 
         /// <summary>
         ///     Notes
         /// </summary>
-        private string Notes { get; set; }
+        public string Notes { get; set; }
 
         /// <summary>
         ///     Email
         /// </summary>
-        private string Email { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         ///     Password
         /// </summary>
-        private string Password { get; set; }
+        public string Password { get; set; }
+
     }
 }

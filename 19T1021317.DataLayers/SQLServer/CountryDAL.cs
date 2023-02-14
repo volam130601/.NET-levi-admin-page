@@ -20,8 +20,6 @@ namespace _19T1021317.DataLayers.SQLServer
         public CountryDAL(string connectionString) : base(connectionString)
         {
             OpenConnection();
-
-
         }
 
 
