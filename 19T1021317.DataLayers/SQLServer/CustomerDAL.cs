@@ -30,8 +30,8 @@ namespace _19T1021317.DataLayers.SQLServer
             using (SqlConnection cn = OpenConnection())
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = @"INSERT INTO Customers(CustomerName , ContactName , Address , City , PostalCode , Country)
-                                    VALUES(@CustomerName, @ContactName, @Address, @City, @PostalCode, @Country);
+                cmd.CommandText = @"INSERT INTO Customers(CustomerName , ContactName , Address , City , PostalCode , Country, Email)
+                                    VALUES(@CustomerName, @ContactName, @Address, @City, @PostalCode, @Country , @Email);
                                     SELECT SCOPE_IDENTITY()";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
@@ -41,6 +41,7 @@ namespace _19T1021317.DataLayers.SQLServer
                 cmd.Parameters.AddWithValue("@City", data.City);
                 cmd.Parameters.AddWithValue("@PostalCode", data.PostalCode);
                 cmd.Parameters.AddWithValue("@Country", data.Country);
+                cmd.Parameters.AddWithValue("@Email", data.Email);
 
                 result = Convert.ToInt32(cmd.ExecuteScalar());
 
@@ -70,9 +71,6 @@ namespace _19T1021317.DataLayers.SQLServer
 			                                    (CustomerName LIKE @SearchValue)
 			                                    OR (ContactName LIKE @SearchValue)
 			                                    OR (Address LIKE @SearchValue)
-			                                    OR (City LIKE @SearchValue)
-			                                    OR (PostalCode LIKE @SearchValue)
-			                                    OR (Country LIKE @SearchValue)
 		                                    )";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
@@ -133,6 +131,7 @@ namespace _19T1021317.DataLayers.SQLServer
                         City = Convert.ToString(dbReader["City"]),
                         PostalCode = Convert.ToString(dbReader["PostalCode"]),
                         Country = Convert.ToString(dbReader["Country"]),
+                        Email = Convert.ToString(dbReader["Email"]),
                     };
                 }
                 cn.Close();
@@ -188,9 +187,6 @@ namespace _19T1021317.DataLayers.SQLServer
 				                                  (CustomerName LIKE @SearchValue)
 			                                    OR (ContactName LIKE @SearchValue)
 			                                    OR (Address LIKE @SearchValue)
-			                                    OR (City LIKE @SearchValue)
-			                                    OR (PostalCode LIKE @SearchValue)
-			                                    OR (Country LIKE @SearchValue)
 			                                    )
                                     ) AS t
                                     WHERE (@PageSize = 0) OR (t.RowNumber BETWEEN (@Page - 1) * @PageSize + 1 AND @Page * @PageSize);";
@@ -213,6 +209,7 @@ namespace _19T1021317.DataLayers.SQLServer
                         City = Convert.ToString(dbReader["City"]),
                         PostalCode = Convert.ToString(dbReader["PostalCode"]),
                         Country = Convert.ToString(dbReader["Country"]),
+                        Email = Convert.ToString(dbReader["Email"]),
                     });
                 }
                 dbReader.Close();
@@ -233,7 +230,7 @@ namespace _19T1021317.DataLayers.SQLServer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"UPDATE Customers
-                                    SET CustomerName = @CustomerName, ContactName = @ContactName, Address = @Address, City = @City, PostalCode = @PostalCode, Country = @Country
+                                    SET CustomerName = @CustomerName, ContactName = @ContactName, Address = @Address, City = @City, PostalCode = @PostalCode, Country = @Country , Email = @Email
                                     WHERE CustomerID = @CustomerID";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
@@ -244,6 +241,7 @@ namespace _19T1021317.DataLayers.SQLServer
                 cmd.Parameters.AddWithValue("@City", data.City);
                 cmd.Parameters.AddWithValue("@PostalCode", data.PostalCode);
                 cmd.Parameters.AddWithValue("@Country", data.Country);
+                cmd.Parameters.AddWithValue("@Email", data.Email);
 
                 result = cmd.ExecuteNonQuery() > 0;
 

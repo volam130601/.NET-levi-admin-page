@@ -31,8 +31,8 @@ namespace _19T1021317.DataLayers.SQLServer
             using (SqlConnection cn = OpenConnection())
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = @"INSERT INTO Employees( LastName , FirstName , BirthDate , Photo , Notes )
-                                    VALUES(@LastName, @FirstName, @BirthDate, @Photo, @Notes);
+                cmd.CommandText = @"INSERT INTO Employees( LastName , FirstName , BirthDate , Photo , Notes , Email)
+                                    VALUES(@LastName, @FirstName, @BirthDate, @Photo, @Notes , @Email);
                                     SELECT SCOPE_IDENTITY()";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
@@ -41,6 +41,7 @@ namespace _19T1021317.DataLayers.SQLServer
                 cmd.Parameters.AddWithValue("@BirthDate", data.BirthDate);
                 cmd.Parameters.AddWithValue("@Photo", data.Photo);
                 cmd.Parameters.AddWithValue("@Notes", data.Notes);
+                cmd.Parameters.AddWithValue("@Email", data.Email);
 
                 result = Convert.ToInt32(cmd.ExecuteScalar());
 
@@ -67,11 +68,8 @@ namespace _19T1021317.DataLayers.SQLServer
                                     FROM	Employees 
                                     WHERE	(@SearchValue = N'')
 	                                    OR	(
-			                                    (LastName LIKE @SearchValue)
-			                                    OR (FirstName LIKE @SearchValue)
-			                                    OR (BirthDate LIKE @SearchValue)
-                                                OR (Photo LIKE @SearchValue)
-                                                OR (Notes LIKE @SearchValue)
+			                                    (FirstName + ' ' + LastName LIKE @SearchValue)
+			                                    OR (Email LIKE @SearchValue)
 		                                    )";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
@@ -131,6 +129,7 @@ namespace _19T1021317.DataLayers.SQLServer
                         BirthDate= Convert.ToDateTime(dbReader["BirthDate"]),
                         Photo = Convert.ToString(dbReader["Photo"]),
                         Notes = Convert.ToString(dbReader["Notes"]),
+                        Email = Convert.ToString(dbReader["Email"]),
                     };
                 }
                 cn.Close();
@@ -183,11 +182,8 @@ namespace _19T1021317.DataLayers.SQLServer
 	                                    FROM	Employees 
 	                                    WHERE	(@SearchValue = N'')
 		                                    OR	(
-				                                    (LastName LIKE @SearchValue)
-			                                    OR (FirstName LIKE @SearchValue)
-			                                    OR (BirthDate LIKE @SearchValue)
-                                                OR (Photo LIKE @SearchValue)
-                                                OR (Notes LIKE @SearchValue)
+				                                   (FirstName + ' ' + LastName LIKE @SearchValue)
+			                                    OR (Email LIKE @SearchValue)
 			                                    )
                                     ) AS t
                                     WHERE (@PageSize = 0) OR (t.RowNumber BETWEEN (@Page - 1) * @PageSize + 1 AND @Page * @PageSize);";
@@ -209,6 +205,7 @@ namespace _19T1021317.DataLayers.SQLServer
                         BirthDate = Convert.ToDateTime(dbReader["BirthDate"]),
                         Photo = Convert.ToString(dbReader["Photo"]),
                         Notes = Convert.ToString(dbReader["Notes"]),
+                        Email = Convert.ToString(dbReader["Email"]),
                     });
                 }
                 dbReader.Close();
@@ -229,7 +226,7 @@ namespace _19T1021317.DataLayers.SQLServer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"UPDATE Employees
-                                    SET LastName = @LastName, FirstName = @FirstName, BirthDate = @BirthDate,Photo = @Photo, Notes = @Notes
+                                    SET LastName = @LastName, FirstName = @FirstName, BirthDate = @BirthDate,Photo = @Photo, Notes = @Notes , Email = @Email
                                     WHERE EmployeeID = @EmployeeID";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
@@ -239,6 +236,7 @@ namespace _19T1021317.DataLayers.SQLServer
                 cmd.Parameters.AddWithValue("@BirthDate", data.BirthDate);
                 cmd.Parameters.AddWithValue("@Photo", data.Photo);
                 cmd.Parameters.AddWithValue("@Notes", data.Notes);
+                cmd.Parameters.AddWithValue("@Email", data.Email);
 
                 result = cmd.ExecuteNonQuery() > 0;
 
