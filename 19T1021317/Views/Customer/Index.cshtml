@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<_19T1021317.DomainModels.Customer>
+@{
     ViewBag.Title = "Customer Management";
 }
 
@@ -6,7 +7,8 @@
     <div class="box-body">
         <form>
             <div class="input-group input-group-sm">
-                <input name="search" type="text" class="form-control" placeholder="Search..." autofocus>
+                <input name="searchValue" type="text" class="form-control" placeholder="Search..." autofocus
+                       value="@ViewBag.SearchValue">
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-info btn-flat">
                         <i class="glyphicon glyphicon-search"></i>
@@ -34,21 +36,21 @@
                 </tr>
             </thead>
             <tbody>
-                @for (var i = 1; i < 10; i++)
+                @foreach (var item in Model)
                 {
                     <tr>
-                        <td>Waring Sikora</td>
-                        <td>Gevee</td>
-                        <td>3829 Twin Pines Alley</td>
-                        <td>example@gmai.com</td>
-                        <td>USA</td>
-                        <td>New York</td>
-                        <td>90275</td>
+                        <td>@item.CustomerName</td>
+                        <td>@item.ContactName</td>
+                        <td>@item.Address</td>
+                        <td>@item.Email</td>
+                        <td>@item.Country</td>
+                        <td>@item.City</td>
+                        <td>@item.PostalCode</td>
                         <td class="text-right">
-                            <a href="~/customer/edit" class="btn btn-success" title="Edit">
+                            <a href="~/customer/edit/@item.CustomerID" class="btn btn-success" title="Edit">
                                 <i class="glyphicon glyphicon-edit"></i>
                             </a>
-                            <a href="~/customer/delete" class="btn btn-danger" title="Remove">
+                            <a href="~/customer/delete/@item.CustomerID" class="btn btn-danger" title="Remove">
                                 <i class="glyphicon glyphicon-remove"></i>
                             </a>
                         </td>
@@ -58,34 +60,45 @@
         </table>
         <div class="row">
             <div class="col-sm-5">
-                <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+                <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing @ViewBag.From to @ViewBag.To of @ViewBag.RowCount entries</div>
             </div>
             <div class="col-sm-7">
                 <div class="dataTables_paginate paging_simple_numbers" style="margin: 0;text-align: center">
                     <ul class="pagination">
-                        <li class="paginate_button previous disabled" id="example2_previous">
-                            <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+                        <li class="paginate_button previous @(ViewBag.Page == 1 ? "disabled" : "")" id="example2_previous">
+                            @if (ViewBag.Page == 1)
+                            {
+                                <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+                            }
+                            else
+                            {
+                                <a href="~/customer?page=@(ViewBag.Page - 1)&searchValue=@ViewBag.SearchValue" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+                            }
                         </li>
-                        <li class="paginate_button active">
-                            <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a>
-                        </li>
-                        <li class="paginate_button ">
-                            <a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0">2</a>
-                        </li>
-                        <li class="paginate_button ">
-                            <a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a>
-                        </li>
-                        <li class="paginate_button ">
-                            <a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a>
-                        </li>
-                        <li class="paginate_button ">
-                            <a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0">5</a>
-                        </li>
-                        <li class="paginate_button ">
-                            <a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0">6</a>
-                        </li>
-                        <li class="paginate_button next" id="example2_next">
-                            <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a>
+                        @for (int i = 1; i <= ViewBag.PageCount; i++)
+                        {
+                            if (i == ViewBag.Page)
+                            {
+                                <li class="paginate_button active">
+                                    <a href="#" aria-controls="example2" data-dt-idx="@i" tabindex="0">@i</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="paginate_button">
+                                    <a href="~/customer?page=@i&searchValue=@ViewBag.SearchValue" aria-controls="example2" data-dt-idx="@i" tabindex="0">@i</a>
+                                </li>
+                            }
+                        }
+                        <li class="paginate_button next @(ViewBag.Page == ViewBag.PageCount ? "disabled" : "")" id="example2_next">
+                            @if (ViewBag.Page == ViewBag.PageCount)
+                            {
+                                <a href="#" aria-controls="example2" data-dt-idx="@ViewBag.PageCount" tabindex="0">Next</a>
+                            }
+                            else
+                            {
+                                <a href="~/customer?page=@(ViewBag.Page + 1)&searchValue=@ViewBag.SearchValue" aria-controls="example2" data-dt-idx="0" tabindex="0">Next</a>
+                            }
                         </li>
                     </ul>
                 </div>

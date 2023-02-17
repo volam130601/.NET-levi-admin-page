@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 using _19T1021317.DomainModels;
 using _19T1021317.BusinessLayers;
-
 namespace _19T1021317.Webs.Controllers
 {
-    public class SupplierController : Controller
+    public class EmployeeController : Controller
     {
         private const int PAGE_SIZE = 5;
         /// <summary>
-        ///     
+        /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index(int page = 1 , string searchValue = "")
+        public ActionResult Index(int page = 1, string searchValue = "")
         {
             int rowCount = 0;
-            var data = CommonDataService.ListOfSuppliers(page, PAGE_SIZE, searchValue ,out rowCount);
+            var data = CommonDataService.ListOfEmployees(page, PAGE_SIZE, searchValue, out rowCount);
 
             int pageCount = rowCount / PAGE_SIZE;
             if (rowCount % PAGE_SIZE > 0) pageCount += 1;
@@ -33,25 +33,23 @@ namespace _19T1021317.Webs.Controllers
             return View(data);
         }
         /// <summary>
-        ///     
+        /// 
         /// </summary>
         /// <returns></returns>
         public ActionResult Create()
         {
-            ViewBag.Title = "Supplier Create New";
             return View("Edit");
         }
         /// <summary>
-        ///     
+        /// 
         /// </summary>
         /// <returns></returns>
         public ActionResult Edit()
         {
-            ViewBag.Title = "Supplier Edit";
             return View();
         }
         /// <summary>
-        ///     
+        /// 
         /// </summary>
         /// <returns></returns>
         public ActionResult Delete()

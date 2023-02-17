@@ -71,6 +71,8 @@ namespace _19T1021317.DataLayers.SQLServer
 			                                    (SupplierName LIKE @SearchValue)
 			                                    OR (ContactName LIKE @SearchValue)
 			                                    OR (Address LIKE @SearchValue)
+			                                    OR (Country LIKE @SearchValue)
+			                                    OR (City LIKE @SearchValue)
                                                 OR (Phone LIKE @SearchValue)
 		                                    )";
                 cmd.CommandType = CommandType.Text;
@@ -144,7 +146,7 @@ namespace _19T1021317.DataLayers.SQLServer
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool InUsed(int id)
+        public bool IsUsed(int id)
         {
             bool result = false;
             using (SqlConnection cn = OpenConnection())
@@ -160,11 +162,6 @@ namespace _19T1021317.DataLayers.SQLServer
                 cn.Close();
             }
             return result;
-        }
-
-        public bool IsUsed(int id)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -194,6 +191,8 @@ namespace _19T1021317.DataLayers.SQLServer
 				                                    (SupplierName LIKE @SearchValue)
 			                                     OR (ContactName LIKE @SearchValue)
 			                                     OR (Address LIKE @SearchValue)
+                                                 OR (Country LIKE @SearchValue)
+			                                     OR (City LIKE @SearchValue)
                                                  OR (Phone LIKE @SearchValue)
 			                                    )
                                     ) AS t

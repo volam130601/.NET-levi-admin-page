@@ -8,7 +8,6 @@ namespace _19T1021317.Webs.Controllers
 {
     public class OrderController : Controller
     {
-        // GET: Order
         /// <summary>
         /// 
         /// </summary>
