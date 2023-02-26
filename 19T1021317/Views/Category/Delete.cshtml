@@ -1,36 +1,36 @@
-﻿
+﻿@model _19T1021317.DomainModels.Category
 @{
-    ViewBag.Title = "Delete";
+
 }
-
-<h2>Delete</h2>
-
-@model dynamic
-
-@{
-    ViewBag.Title = "Delete Category";
-}
+@using _19T1021317.BusinessLayers;
 
 
-<div class="box box-danger">
+<div class="box box-danger"> 
     <div class="box-title">
         <h3 style="padding-left: 24px">Are you sure you want to remove this category?</h3>
     </div>
     <div class="box-body">
-        <form class="form-horizontal">
+        <form action="~/Category/delete/@Model.CategoryID" method="post" class="form-horizontal">
+            @Html.AntiForgeryToken()  <!--Chỉ thị mã hóa tránh fake dữ liệu-->
+             
             <div class="form-group">
-                <label class="control-label col-sm-2">Category Name:</label>
-                <p class="form-control-static col-sm-10">
-                    Seafood
-                </p>
+                <div class="col-sm-10">
+                    <input type="hidden" class="form-control" id="CategoryID" name="CategoryID" value="@Model.CategoryID">
+                </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">
+                <label class="control-label col-sm-2" for="categoryName">Category Name:</label>
+                <div class="col-sm-10">
+                    <input type="text"disabled  name="CategoryName" class="form-control" id="categoryName" value="@Model.CategoryName" placeholder="Enter Category Name" autofocus>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="description">
                     Description:
                 </label>
-                <p class="form-control-static col-sm-10">
-                    Fish, Shrimp, Crab, etc.
-                </p>
+                <div class="col-sm-10">
+                    <textarea name="Description" disabled class="form-control" id="description" value="@Model.Description" style="min-height: 160px; resize: vertical" placeholder="Enter description"></textarea>
+                </div>
             </div>
 
             <div class="form-group">

@@ -1,49 +1,57 @@
-﻿@model dynamic
-
+﻿@model _19T1021317.DomainModels.Employee
 @{
-    ViewBag.Title = "Remove Supplier";
+     
 }
+@using _19T1021317.BusinessLayers;
 
 <div class="box box-danger">
     <div class="box-title">
         <h3 style="padding-left: 24px">Are you sure you want to remove this staff?</h3>
     </div>
     <div class="box-body">
-        <form class="form-horizontal" style="position: relative">
-            <div class="photo" style="position: absolute; right: 24px;">
-                <img src="https://skillking.fpt.edu.vn/wp-content/uploads/2022/11/vi-tri-staff-la-gi.jpg" alt="staff" style="width: 120px; height: 160px; object-fit: cover">
-                <p class="text-center">Photo</p>
+        <form action="~/employee/delete/@Model.EmployeeID" method="post" class="form-horizontal">
+            @Html.AntiForgeryToken() <!--Chỉ thị mã hóa tránh fake dữ liệu-->
+
+            <div class="form-group">
+                <div class="col-sm-10">
+                    <input type="hidden" class="form-control" id="EmployeeID" name="EmployeeID" value="@Model.EmployeeID">
+                </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">First Name:</label>
-                <p class="col-sm-10 form-control-static">
-                    John
-                </p>
+                <label class="control-label col-sm-2" for="firstName">First Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" name="FirstName" class="form-control" id="firstName" value="@Model.FirstName" placeholder="Enter Supplier Name" autofocus>
+                </div>
+                <label class="control-label col-sm-2" for="lastName">Last Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" name="LastName" class="form-control" id="lastName" value="@Model.LastName" placeholder="Enter Last Name">
+                </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Last Name:</label>
-                <p class="col-sm-10 form-control-static">
-                    Doe
-                </p>
+                <label class="control-label col-sm-2" for="email">Email:</label>
+                <div class="col-sm-10">
+                    <input type="email" name="Email" class="form-control" id="email" value="@Model.Email" placeholder="Enter Email">
+                </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Email:</label>
-                <p class="col-sm-10 form-control-static">
-                    johnDoe@gmail.com
-                </p>
+                <label class="control-label col-sm-2" for="birthdate">Birthdate:</label>
+                <div class="col-sm-10">
+                    <input type="date" name="BirthDate" class="form-control" id="birthdate" value="@Model.BirthDate" placeholder="Enter Birthdate">
+                </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Birthdate:</label>
-                <p class="col-sm-10 form-control-static">
-                    23/12/1999
-                </p>
+                <label class="control-label col-sm-2" for="photo">Photo:</label>
+                <div class="col-sm-10">
+                    <input type="file" name="Photo" class="form-control" id="photo" value="@Model.Photo" placeholder="Enter Photo">
+                </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Notes:</label>
-                <p class="col-sm-10 form-control-static">
-                    Notes is a notetaking app developed by Apple Inc. It is provided on their iOS, iPadOS and macOS operating systems, the latter starting with OS X Mountain Lion. It functions as a service for making short text notes, which can be synchronized between devices using Apple's iCloud service
-                </p>
+                <label class="control-label col-sm-2" for="note">Note:</label>
+                <div class="col-sm-10">
+                    <textarea name="Notes" class="form-control" value="@Model.Notes" id="note" style="min-height: 160px; resize: vertical" placeholder="Enter Note"></textarea>
+                </div>
             </div>
+
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

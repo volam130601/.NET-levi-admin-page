@@ -1,40 +1,59 @@
-﻿<div class="box box-primary">
+﻿@model _19T1021317.DomainModels.Supplier
+@using _19T1021317.BusinessLayers;
+
+<div class="box box-primary">
     <div class="box-body">
-        <form class="form-horizontal">
+        <form action="~/supplier/save" method="post" class="form-horizontal">
+            @Html.AntiForgeryToken() <!--Chỉ thị mã hóa tránh fake dữ liệu-->
+
             <div class="form-group">
-                <label class="control-label col-sm-2" for="supplierName">Supplier Name:</label>
                 <div class="col-sm-10">
-                    <input type="text" name="supplierName" class="form-control" id="supplierName" placeholder="Enter Supplier Name" autofocus>
+                    <input type="hidden" class="form-control" id="SupplierID" name="SupplierID" value="@Model.SupplierID">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="SupplierName">Supplier Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="SupplierName" name="SupplierName" value="@Model.SupplierName" placeholder="Enter Supplier Name" autofocus>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="contactName">Contact Name:</label>
+                <label class="control-label col-sm-2" for="ContactName">Contact Name:</label>
                 <div class="col-sm-10">
-                    <input type="text" name="contactName" class="form-control" id="contactName" placeholder="Enter Contact Name">
+                    <input type="text"class="form-control" id="ContactName" name="ContactName" value="@Model.ContactName" placeholder="Enter Contact Name">
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="address">Address:</label>
+                <label class="control-label col-sm-2" for="Address">Address:</label>
                 <div class="col-sm-10">
-                    <input type="text" name="address" class="form-control" id="address" placeholder="Enter Address">
+                    <input type="text"  class="form-control" id="Address" name="Address" value="@Model.Address" placeholder="Enter Address">
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="phone">Phone:</label>
+                <label class="control-label col-sm-2" for="Phone">Phone:</label>
                 <div class="col-sm-10">
-                    <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone">
+                    <input type="text" class="form-control" id="Phone" name="Phone" value="@Model.Phone" placeholder="Enter Phone">
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="country">Country:</label>
+                <label class="control-label col-sm-2" for="Country">Country:</label>
                 <div class="col-sm-10">
-                    <select name="country" id="country" class="form-control">
+                    <select name="Country" id="Country" class="form-control">
                         <option value=""> -- Choose Country -- </option>
                         @foreach (var item in _19T1021317.BusinessLayers.CommonDataService.ListOfCountries())
                         {
-                            <option value="@item.CountryName">
-                                @item.CountryName
-                            </option>
+                            if (item.CountryName == Model.Country)
+                            {
+                                <option value="@item.CountryName" selected>@item.CountryName</option>
+                            }
+                            else
+                            {
+                                <option value="@item.CountryName">
+                                    @item.CountryName
+                                </option>
+                            }
+
                         }
                     </select>
                 </div>
@@ -42,18 +61,14 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="city">City:</label>
                 <div class="col-sm-10">
-                    <select name="city" id="city" class="form-control">
-                        <option value=""> -- Choose City -- </option>
-                        <option value="">City 1</option>
-                        <option value="">City 2</option>
-                        <option value="">City 3</option>
-                    </select>
+                    <input type="text" class="form-control" id="City" name="City" value="@Model.City">
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="control-label col-sm-2" for="postalCode">Postal Code:</label>
                 <div class="col-sm-10">
-                    <input type="text" name="postalCode" class="form-control" id="postalCode" placeholder="Enter Postal Code">
+                    <input type="text"  class="form-control" id="PostalCode" name="PostalCode" value="@Model.PostalCode" placeholder="Enter Postal Code">
                 </div>
             </div>
 

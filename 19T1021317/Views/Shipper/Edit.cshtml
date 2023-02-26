@@ -1,23 +1,28 @@
-﻿@model dynamic
-
-@{
-}
+﻿@model _19T1021317.DomainModels.Shipper
+@using _19T1021317.BusinessLayers;
 
 <div class="box box-primary">
     <div class="box-body">
-        <form class="form-horizontal">
+        <form action="~/Shipper/save" method="post" class="form-horizontal">
+            @Html.AntiForgeryToken() <!--Chỉ thị mã hóa tránh fake dữ liệu-->
+
+            <div class="form-group">
+                <div class="col-sm-10">
+                    <input type="hidden" class="form-control" id="ShipperId" name="ShipperId" value="@Model.ShipperId">
+                </div>
+            </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="shipperName">Category Name:</label>
                 <div class="col-sm-10">
-                    <input type="text" name="shipperName" class="form-control" id="shipperName" placeholder="Enter Category Name" autofocus>
-                </div>
+                    <input type="text" name="ShipperName" class="form-control" id="shipperName"  value="@Model.ShipperName" placeholder="Enter Category Name" autofocus>
+                </div> 
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="phone">
                     Phone:
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter phone">
+                    <input type="text" name="Phone" class="form-control" id="phone"  value="@Model.Phone" placeholder="Enter phone">
                 </div>
             </div>
 

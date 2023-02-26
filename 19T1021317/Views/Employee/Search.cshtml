@@ -1,0 +1,92 @@
+﻿@model _19T1021317.Webs.Models.EmployeeSearchOutput
+@{ Layout = null; }
+
+<div class="row" style="margin-top: 12px">
+    @foreach (var item in Model.Data)
+    {
+        <div class="col-sm-6">
+            <div class="box box-primary" style="padding: 10px; position: relative;">
+                <div class="box box-primary" style="padding: 10px; position: relative;">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <img src="https://skillking.fpt.edu.vn/wp-content/uploads/2022/11/vi-tri-staff-la-gi.jpg" alt="staff" style="width: 100%; height: 120px; object-fit: cover">
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="">
+                                <i class="glyphicon glyphicon-user"></i>
+                                @(item.FirstName + ' ' + item.LastName)
+                            </div>
+                            <div>
+                                <i class="glyphicon glyphicon-envelope"></i>
+                                @item.Email
+                            </div>
+                            <div>
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                @item.BirthDate
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 12px; font-style: italic">
+                        <span style="font-size: 1.5rem">&#8220;</span>
+                        @item.Notes
+                        <span style="font-size: 1.5rem">&#8221;</span>
+                    </p>
+                </div>
+                <div style="position: absolute; top: 8px; right: 16px ">
+                    <a href="~/employee/edit/@item.EmployeeID" class="text-info" title="Edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a href="~/employee/delete/@item.EmployeeID" class="text-danger" title="Remove" style="margin-left: 6px">
+                        <i class="glyphicon glyphicon-remove"></i>
+                    </a>
+                </div>
+            </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing @Model.From to @Model.To of @Model.TotalItems entries</div>
+            </div>
+            <div class="col-sm-7">
+                <div class="dataTables_paginate paging_simple_numbers" style="margin: 0;text-align: center">
+                    <ul class="pagination">
+                        <li class="paginate_button previous @(Model.Page == 1 ? "disabled" : "")" id="example2_previous">
+                            @if (Model.Page == 1)
+                            {
+                                <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+                            }
+                            else
+                            {
+                                <a href="~/employee?page=@(Model.Page - 1)&searchValue=@Model.SearchValue" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+                            }
+                        </li>
+                        @for (int i = 1; i <= Model.PageCount; i++)
+                        {
+                            if (i == Model.Page)
+                            {
+                                <li class="paginate_button active">
+                                    <a href="#" aria-controls="example2" data-dt-idx="@i" tabindex="0">@i</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="paginate_button">
+                                    <a href="~/employee?page=@i&searchValue=@Model.SearchValue" aria-controls="example2" data-dt-idx="@i" tabindex="0">@i</a>
+                                </li>
+                            }
+                        }
+                        <li class="paginate_button next @(Model.Page == Model.PageCount ? "disabled" : "")" id="example2_next">
+                            @if (Model.Page == Model.PageCount)
+                            {
+                                <a href="#" aria-controls="example2" data-dt-idx="@Model.PageCount" tabindex="0">Next</a>
+                            }
+                            else
+                            {
+                                <a href="~/employee?page=@(Model.Page + 1)&searchValue=@Model.SearchValue" aria-controls="example2" data-dt-idx="0" tabindex="0">Next</a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>

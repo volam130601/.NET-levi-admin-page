@@ -6,55 +6,111 @@ using System.Web.Mvc;
 
 using _19T1021317.DomainModels;
 using _19T1021317.BusinessLayers;
+using _19T1021317.Webs.Models;
+
 namespace _19T1021317.Webs.Controllers
 {
     public class ShipperController : Controller
     {
         private const int PAGE_SIZE = 5;
+        private const string SHIPPER_SEARCH = "ShipperCondition";
         /// <summary>
-        /// 
+        /// Show Index of shipper
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index(int page = 1, string searchValue = "")
+        public ActionResult Index()
         {
-            int rowCount = 0;
-            var data = CommonDataService.ListOfShippers(page, PAGE_SIZE, searchValue, out rowCount);
-
-            int pageCount = rowCount / PAGE_SIZE;
-            if (rowCount % PAGE_SIZE > 0) pageCount += 1;
-
-            ViewBag.Page = page;
-            ViewBag.From = (page - 1) * PAGE_SIZE + 1;
-            ViewBag.To = (page != pageCount) ? ((page - 1) * PAGE_SIZE + PAGE_SIZE) : rowCount;
-            ViewBag.RowCount = rowCount;
-            ViewBag.PageCount = pageCount;
-            ViewBag.SearchValue = searchValue;
-
-            return View(data);
+            var condition = Session[SHIPPER_SEARCH] as PaginationSearchInput ?? new PaginationSearchInput
+            {
+                Page = 1,
+                PageSize = PAGE_SIZE,
+                SearchValue = "",
+            };
+            return View(condition);
         }
         /// <summary>
-        /// 
+        /// Search a shipper
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public ActionResult Search(PaginationSearchInput input)
+        {
+            var data = CommonDataService.ListOfShippers(input.Page, input.PageSize, input.SearchValue, out var totalItems);
+            var result = new ShipperSearchOutput
+            {
+                Page = input.Page,
+                PageSize = input.PageSize,
+                SearchValue = input.SearchValue,
+                TotalItems = totalItems,
+                Data = data
+            };
+            Session[SHIPPER_SEARCH] = input;
+
+            return View(result);
+        }
+
+        /// <summary>
+        ///     
         /// </summary>
         /// <returns></returns>
         public ActionResult Create()
         {
-            return View("Edit");
+            ViewBag.Title = "Shipper Create New";
+            var data = new Shipper()
+            {
+                ShipperId = 0
+            };
+            return View("Edit", data);
         }
         /// <summary>
-        /// 
+        ///     
         /// </summary>
         /// <returns></returns>
-        public ActionResult Edit()
+        public ActionResult Edit(String ID)
         {
-            return View();
+            ViewBag.Title = "Shipper Edit";
+            int ShipperId = Convert.ToInt32(ID);
+            var data = CommonDataService.GetShipperByID(ShipperId);
+            return View(data);
         }
         /// <summary>
-        /// 
+        ///     
         /// </summary>
         /// <returns></returns>
-        public ActionResult Delete()
+        public ActionResult Delete(String ID)
         {
-            return View();
+            int ShipperId = Convert.ToInt32(ID);
+            if (Request.HttpMethod == "GET")
+            {
+                var data = CommonDataService.GetShipperByID(ShipperId);
+                return View(data);
+            }
+            else
+            {
+                CommonDataService.DeleteShipper(ShipperId);
+                return RedirectToAction("Index");
+            }
+        }
+
+        /// <summary>
+        /// Save data of Shippers
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken] // atribute kiểm tra antitoken
+        public ActionResult Save(Shipper data)
+        {
+            if (data.ShipperId == 0)
+            {
+                CommonDataService.AddShipper(data);
+            }
+            else
+            {
+                CommonDataService.UpdateShipper(data);
+            }
+            return RedirectToAction("Index");
+
         }
     }
 }

@@ -1,43 +1,48 @@
-﻿@model dynamic
-
-@{
-}
+﻿@model _19T1021317.DomainModels.Employee
+@using _19T1021317.BusinessLayers;
 
 <div class="box box-primary">
     <div class="box-body">
-        <form class="form-horizontal">
+        <form action="~/employee/save" method="post" class="form-horizontal">
+            @Html.AntiForgeryToken() <!--Chỉ thị mã hóa tránh fake dữ liệu-->
+
+            <div class="form-group">
+                <div class="col-sm-10">
+                    <input type="hidden" class="form-control" id="EmployeeID" name="EmployeeID" value="@Model.EmployeeID">
+                </div>
+            </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="firstName">First Name:</label>
                 <div class="col-sm-4">
-                    <input type="text" name="firstName" class="form-control" id="firstName" placeholder="Enter Supplier Name" autofocus>
+                    <input type="text" name="FirstName" class="form-control" id="firstName"  value="@Model.FirstName" placeholder="Enter Supplier Name" autofocus>
                 </div>
                 <label class="control-label col-sm-2" for="lastName">Last Name:</label>
                 <div class="col-sm-4">
-                    <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Enter Last Name">
+                    <input type="text" name="LastName" class="form-control" id="lastName"  value="@Model.LastName" placeholder="Enter Last Name">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">Email:</label>
                 <div class="col-sm-10">
-                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email">
+                    <input type="email" name="Email" class="form-control" id="email"  value="@Model.Email" placeholder="Enter Email">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="birthdate">Birthdate:</label>
                 <div class="col-sm-10">
-                    <input type="date" name="birthdate" class="form-control" id="birthdate" placeholder="Enter Birthdate">
+                    <input type="date" name="BirthDate" class="form-control" id="birthdate"  value="@Model.BirthDate" placeholder="Enter Birthdate">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="photo">Photo:</label>
                 <div class="col-sm-10">
-                    <input type="file" name="photo" class="form-control" id="photo" placeholder="Enter Photo">
+                    <input type="file" name="Photo" class="form-control" id="photo"  value="@Model.Photo" placeholder="Enter Photo">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="note">Note:</label>
                 <div class="col-sm-10">
-                    <textarea name="note" class="form-control" id="note" style="min-height: 160px; resize: vertical" placeholder="Enter Note"></textarea>
+                    <textarea name="Notes" class="form-control"  value="@Model.Notes" id="note" style="min-height: 160px; resize: vertical" placeholder="Enter Note"></textarea>
                 </div>
             </div>
 
