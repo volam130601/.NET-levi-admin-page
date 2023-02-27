@@ -14,23 +14,6 @@ namespace _19T1021317.Webs.Controllers
         private const int PAGE_SIZE = 5;
         private const string SUPPLIER_SEARCH = "SupplierCondition";
        
-       /* public ActionResult Index(int page = 1 , string searchValue = "")
-        {
-            int rowCount = 0;
-            var data = CommonDataService.ListOfSuppliers(page, PAGE_SIZE, searchValue ,out rowCount);
-
-            int pageCount = rowCount / PAGE_SIZE;
-            if (rowCount % PAGE_SIZE > 0) pageCount += 1;
-
-            ViewBag.Page = page;
-            ViewBag.From = (page - 1) * PAGE_SIZE + 1;
-            ViewBag.To = (page != pageCount) ? ((page - 1) * PAGE_SIZE + PAGE_SIZE) : rowCount;
-            ViewBag.RowCount = rowCount;
-            ViewBag.PageCount = pageCount;
-            ViewBag.SearchValue = searchValue;
-
-            return View(data);
-        }*/
        /// <summary>
        /// Show Index of supplier
        /// </summary>
@@ -115,17 +98,42 @@ namespace _19T1021317.Webs.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken] // atribute kiểm tra antitoken
-        public ActionResult Save(Supplier data)
+        public ActionResult Save(Supplier supplier)
         {
-            if (data.SupplierID == 0)
+            try
             {
-                CommonDataService.AddSupplier(data);
+                if (string.IsNullOrWhiteSpace(supplier.SupplierName))
+                    ModelState.AddModelError("SupplierName", "Supplier Name is required");
+                if (string.IsNullOrWhiteSpace(supplier.Address))
+                    ModelState.AddModelError("Address", "Address is required");
+                if (string.IsNullOrWhiteSpace(supplier.Phone))
+                    ModelState.AddModelError("Phone", "Phone is required");
+                if (string.IsNullOrWhiteSpace(supplier.ContactName))
+                    ModelState.AddModelError("ContactName", "Contact Name is required");
+                if (string.IsNullOrWhiteSpace(supplier.Country))
+                    ModelState.AddModelError("Country", "Please select a country");
+                if (string.IsNullOrWhiteSpace(supplier.City))
+                    ModelState.AddModelError("City", "City is required");
+                if (string.IsNullOrWhiteSpace(supplier.PostalCode))
+                    ModelState.AddModelError("PostalCode", "Postal Code is required");
+
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Title = supplier.SupplierID == 0 ? "Supplier | Create" : "Supplier | Edit";
+                    return View("Edit", supplier);
+                }
+
+                if (supplier.SupplierID == 0)
+                    CommonDataService.AddSupplier(supplier);
+                else
+                    CommonDataService.UpdateSupplier(supplier);
+                return RedirectToAction("Index");
             }
-            else
+            catch (Exception e)
             {
-                CommonDataService.UpdateSupplier(data);
+                ViewBag.Title = "Supplier | Error";
+                return PartialView("Error", e.Message);
             }
-            return RedirectToAction("Index");
 
         }
 

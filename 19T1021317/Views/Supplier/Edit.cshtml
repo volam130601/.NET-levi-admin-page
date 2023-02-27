@@ -1,5 +1,5 @@
 ﻿@model _19T1021317.DomainModels.Supplier
-@using _19T1021317.BusinessLayers;
+@using _19T1021317.Webs.Codes
 
 <div class="box box-primary">
     <div class="box-body">
@@ -16,59 +16,50 @@
                 <label class="control-label col-sm-2" for="SupplierName">Supplier Name:</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="SupplierName" name="SupplierName" value="@Model.SupplierName" placeholder="Enter Supplier Name" autofocus>
+                    @Html.ValidationMessageFor(m => m.SupplierName, "",new{@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="ContactName">Contact Name:</label>
                 <div class="col-sm-10">
-                    <input type="text"class="form-control" id="ContactName" name="ContactName" value="@Model.ContactName" placeholder="Enter Contact Name">
+                    <input type="text" class="form-control" id="ContactName" name="ContactName" value="@Model.ContactName" placeholder="Enter Contact Name">
+                    @Html.ValidationMessageFor(m => m.ContactName, "", new{@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="Address">Address:</label>
                 <div class="col-sm-10">
-                    <input type="text"  class="form-control" id="Address" name="Address" value="@Model.Address" placeholder="Enter Address">
+                    <input type="text" class="form-control" id="Address" name="Address" value="@Model.Address" placeholder="Enter Address">
+                    @Html.ValidationMessageFor(m => m.Address, "",new {@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="Phone">Phone:</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="Phone" name="Phone" value="@Model.Phone" placeholder="Enter Phone">
+                    @Html.ValidationMessageFor(m => m.Phone, "",new{@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="Country">Country:</label>
                 <div class="col-sm-10">
-                    <select name="Country" id="Country" class="form-control">
-                        <option value=""> -- Choose Country -- </option>
-                        @foreach (var item in _19T1021317.BusinessLayers.CommonDataService.ListOfCountries())
-                        {
-                            if (item.CountryName == Model.Country)
-                            {
-                                <option value="@item.CountryName" selected>@item.CountryName</option>
-                            }
-                            else
-                            {
-                                <option value="@item.CountryName">
-                                    @item.CountryName
-                                </option>
-                            }
-
-                        }
-                    </select>
+                        @Html.DropDownListFor(m => m.Country, SelectListHelper.Countries(), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Country, "", new { @class="text-danger"})
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="city">City:</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="City" name="City" value="@Model.City">
+                    @Html.ValidationMessageFor(m => m.City, "",new{ @class = "text-danger"})
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2" for="postalCode">Postal Code:</label>
                 <div class="col-sm-10">
-                    <input type="text"  class="form-control" id="PostalCode" name="PostalCode" value="@Model.PostalCode" placeholder="Enter Postal Code">
+                    <input type="text" class="form-control" id="PostalCode" name="PostalCode" value="@Model.PostalCode" placeholder="Enter Postal Code">
+                    @Html.ValidationMessageFor(m => m.PostalCode, "", new { @class = "text-danger" })
                 </div>
             </div>
 
