@@ -99,17 +99,47 @@ namespace _19T1021317.Webs.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken] // atribute kiểm tra antitoken
-        public ActionResult Save(Customer data)
+        public ActionResult Save(Customer customer)
         {
-            if (data.CustomerID == 0)
+            try
             {
-                CommonDataService.AddCustomer(data);
+                if (string.IsNullOrWhiteSpace(customer.CustomerName))
+                    ModelState.AddModelError("CustomerName", "Customer Name is required");
+                if (string.IsNullOrWhiteSpace(customer.Address))
+                    ModelState.AddModelError("Address", "Address is required");
+                if (string.IsNullOrWhiteSpace(customer.Email))
+                    ModelState.AddModelError("Email", "Email is required");
+                if (string.IsNullOrWhiteSpace(customer.ContactName))
+                    ModelState.AddModelError("ContactName", "Contact Name is required");
+                if (string.IsNullOrWhiteSpace(customer.Country))
+                    ModelState.AddModelError("Country", "Please select a country");
+                if (string.IsNullOrWhiteSpace(customer.City))
+                    ModelState.AddModelError("City", "City is required");
+                if (string.IsNullOrWhiteSpace(customer.PostalCode))
+                    ModelState.AddModelError("PostalCode", "Postal Code is required");
+                if (string.IsNullOrWhiteSpace(customer.Password))
+                    ModelState.AddModelError("Password", "Password is required");
+
+                return RedirectToAction("Index");
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Title = customer.CustomerID == 0 ? "Customer | Create" : "Customer | Edit";
+                    return View("Edit", customer);
+                }
+
+                if (customer.CustomerID == 0)
+                    CommonDataService.AddCustomer(customer);
+                else
+                    CommonDataService.UpdateCustomer(customer);
+
+                return RedirectToAction("Index");
             }
-            else
+            catch (Exception e)
             {
-                CommonDataService.UpdateCustomer(data);
+                ViewBag.Title = "Customer | Error";
+                return PartialView("Error", e.Message);
             }
-            return RedirectToAction("Index");
+
 
         }
     }

@@ -1,5 +1,5 @@
 ﻿@model _19T1021317.DomainModels.Category
-@using _19T1021317.BusinessLayers;
+@using _19T1021317.Webs.Codes
 
 <div class="box box-primary">
     <div class="box-body">
@@ -16,6 +16,7 @@
                 <label class="control-label col-sm-2" for="categoryName">Category Name:</label>
                 <div class="col-sm-10">
                     <input type="text" name="CategoryName" class="form-control" id="categoryName" value="@Model.CategoryName" placeholder="Enter Category Name" autofocus>
+                    @Html.ValidationMessageFor(m => m.CategoryName, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
@@ -24,6 +25,7 @@
                 </label>
                 <div class="col-sm-10">
                     <textarea name="Description" class="form-control" id="description" value="@Model.Description" style="min-height: 160px; resize: vertical" placeholder="Enter description"></textarea>
+                    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
 

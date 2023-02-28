@@ -98,18 +98,40 @@ namespace _19T1021317.Webs.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken] // atribute kiểm tra antitoken
-        public ActionResult Save(Employee data)
+        public ActionResult Save(Employee employee)
         {
-            if (data.EmployeeID == 0)
+            try
             {
-                CommonDataService.AddEmployee(data);
-            }
-            else
-            {
-                CommonDataService.UpdateEmployee(data);
-            }
-            return RedirectToAction("Index");
+                if (string.IsNullOrWhiteSpace(employee.FirstName))
+                    ModelState.AddModelError("FirstName", "First Name is required");
+                if (string.IsNullOrWhiteSpace(employee.LastName))
+                    ModelState.AddModelError("LastName", "LastName is required");
+                if (string.IsNullOrWhiteSpace(employee.BirthDate.ToString()))
+                    ModelState.AddModelError("BirthDate", "BirthDate is required");
+                if (string.IsNullOrWhiteSpace(employee.Photo))
+                    ModelState.AddModelError("Photo", "Photo is required");
+                if (string.IsNullOrWhiteSpace(employee.Notes))
+                    ModelState.AddModelError("Notes", "Notes is required");
+                if (string.IsNullOrWhiteSpace(employee.Email))
+                    ModelState.AddModelError("Email", "Email is required");
 
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Title = employee.EmployeeID == 0 ? "Employee | Create" : "Employee | Edit";
+                    return View("Edit", employee);
+                }
+
+                if (employee.EmployeeID == 0)
+                    CommonDataService.AddEmployee(employee);
+                else
+                    CommonDataService.UpdateEmployee(employee);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Title = "Employee | Error";
+                return PartialView("Error", e.Message);
+            }
         }
     }
 }

@@ -99,17 +99,32 @@ namespace _19T1021317.Webs.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken] // atribute kiểm tra antitoken
-        public ActionResult Save(Shipper data)
+        public ActionResult Save(Shipper shipper)
         {
-            if (data.ShipperId == 0)
+            try
             {
-                CommonDataService.AddShipper(data);
+                if (string.IsNullOrWhiteSpace(shipper.ShipperName))
+                    ModelState.AddModelError("ShipperName", "Shipper Name is required");
+                if (string.IsNullOrWhiteSpace(shipper.Phone))
+                    ModelState.AddModelError("Phone", "Phone is required");
+
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Title = shipper.ShipperId == 0 ? "Shipper | Create" : "Shipper | Edit";
+                    return View("Edit", shipper);
+                }
+
+                if (shipper.ShipperId == 0)
+                    CommonDataService.AddShipper(shipper);
+                else
+                    CommonDataService.UpdateShipper(shipper);
+                return RedirectToAction("Index");
             }
-            else
+            catch (Exception e)
             {
-                CommonDataService.UpdateShipper(data);
+                ViewBag.Title = "Shipper | Error";
+                return PartialView("Error", e.Message);
             }
-            return RedirectToAction("Index");
 
         }
     }

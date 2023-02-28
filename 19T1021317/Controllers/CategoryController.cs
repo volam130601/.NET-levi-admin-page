@@ -100,17 +100,36 @@ namespace _19T1021317.Webs.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken] // atribute kiểm tra antitoken
-        public ActionResult Save(Category data)
+        public ActionResult Save(Category category)
         {
-            if (data.CategoryID == 0)
+            try
             {
-                CommonDataService.AddCategory(data);
+                if (string.IsNullOrEmpty(category.CategoryName))
+                    ModelState.AddModelError("CategoryName",
+                                             "Category Name is required"
+                    );
+                if (string.IsNullOrEmpty(category.Description))
+                    ModelState.AddModelError("Description",
+                                             "Description is required"
+                    );
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Title = category.CategoryID == 0 ? "Category | Create" : "Category | Edit";
+                    return View("Edit", category);
+                }
+
+                if (category.CategoryID == 0)
+                    CommonDataService.AddCategory(category);
+                else
+                    CommonDataService.UpdateCategory(category);
+                return RedirectToAction("Index");
             }
-            else
+            catch (Exception e)
             {
-                CommonDataService.UpdateCategory(data);
+                ViewBag.Title = "Supplier | Error";
+                return PartialView("Error", e.Message);
             }
-            return RedirectToAction("Index");
+
 
         }
     }
