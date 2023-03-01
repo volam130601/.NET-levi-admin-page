@@ -9,6 +9,7 @@ using _19T1021317.Webs.Models;
 
 namespace _19T1021317.Webs.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         private const int PAGE_SIZE = 5;

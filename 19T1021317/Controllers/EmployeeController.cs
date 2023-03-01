@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
 using _19T1021317.DomainModels;
 using _19T1021317.BusinessLayers;
 using _19T1021317.Webs.Models;
@@ -17,6 +16,7 @@ namespace _19T1021317.Webs.Controllers
         /// Show Index of employee
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public ActionResult Index()
         {
             var condition = Session[EMPLOYEE_SEARCH] as PaginationSearchInput ?? new PaginationSearchInput
