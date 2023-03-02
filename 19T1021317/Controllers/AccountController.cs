@@ -59,6 +59,55 @@ namespace _19T1021317.Webs.Controllers
         }
 
         /// <summary>
+        ///     Change password
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        /// <summary>
+        ///     Change password
+        /// </summary>
+        /// <param name="username"> Username </param>
+        /// <param name="oldPassword"> Password </param>
+        /// <param name="newPassword"> Re-Password </param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            ViewBag.UserName = username;
+            ViewBag.OldPassword = oldPassword;
+            ViewBag.NewPassword = newPassword;
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(oldPassword) || string.IsNullOrEmpty(newPassword))
+            {
+                ModelState.AddModelError("ChangePasswordError", "Username or old-password or new-password is required");
+                Console.WriteLine("abc");
+                return View();
+            }
+
+            if (oldPassword.Equals(newPassword))
+            {
+                ModelState.AddModelError("ChangePasswordError", "New password and old password must is diff");
+
+                return View();
+            }
+
+            var result = UserAccountService.ChangePassword(AccountTypes.Employee, username, oldPassword, newPassword);
+
+            if (result)
+                return RedirectToAction("Index", "Home");
+
+            ModelState.AddModelError("ChangePasswordError", "Username or old password is invalid");
+            return View();
+        }
+
+
+        /// <summary>
         ///     Logout
         /// </summary>
         /// <returns></returns>
