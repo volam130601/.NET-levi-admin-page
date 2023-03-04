@@ -20,7 +20,7 @@ namespace _19T1021317.Webs.Codes
             list.Add(new SelectListItem
             {
                 Text = "-- Select a country --",
-                Value = ""
+                Value = "0"
             });
 
             foreach (var item in CommonDataService.ListOfCountries())
@@ -33,6 +33,46 @@ namespace _19T1021317.Webs.Codes
             }
             return list;
 
+        }
+
+        public static List<SelectListItem> Suppliers()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem()
+            {
+                Text = "-- Select a supplier --",
+                Value = "0"
+            });
+
+            foreach (var item in CommonDataService.ListOfSuppliers())
+            {
+                list.Add(new SelectListItem()
+                {
+                    Text = item.SupplierName,
+                    Value = item.SupplierID.ToString()
+                });
+            }
+            return list;
+        }
+        
+        public static List<SelectListItem> Categories()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem()
+            {
+                Text = "-- Select a category --",
+                Value = ""
+            });
+
+            foreach (var item in CommonDataService.ListOfCategories())
+            {
+                list.Add(new SelectListItem()
+                {
+                    Text = item.CategoryName,
+                    Value = item.CategoryID.ToString()
+                });
+            }
+            return list;
         }
     }
 }

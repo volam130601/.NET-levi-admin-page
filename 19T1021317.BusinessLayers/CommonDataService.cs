@@ -67,6 +67,15 @@ namespace _19T1021317.BusinessLayers
         }
 
         /// <summary>
+        /// Get list of suppliers not navigation
+        /// </summary>
+        /// <returns></returns>
+        public static List<Supplier> ListOfSuppliers()
+        {
+            return supplierDB.List().ToList();
+        }
+
+        /// <summary>
         ///     Get supplier by id
         /// </summary>
         /// <param name="id"> SupplierID </param>
@@ -141,6 +150,15 @@ namespace _19T1021317.BusinessLayers
         public static List<Category> ListOfCategories(string searchValue)
         {
             return categoryDB.List(1, 0, searchValue).ToList();
+        }
+        /// <summary>
+        ///   Get list of categories(don't pagination)
+        /// </summary>
+        /// <param name="searchValue"></param>
+        /// <returns></returns>
+        public static List<Category> ListOfCategories()
+        {
+            return categoryDB.List().ToList();
         }
 
         /// <summary>

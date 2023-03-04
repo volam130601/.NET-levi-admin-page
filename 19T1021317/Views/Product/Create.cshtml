@@ -1,0 +1,102 @@
+﻿@using _19T1021317.Webs.Codes
+@model _19T1021317.DomainModels.Product
+@{ ViewBag.Title = "Create Product"; }
+
+<div class="box box-primary">
+    <div class="box-body">
+        <form action="~/Product/Save" class="form-horizontal" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <input name="ProductID" type="hidden" value="@Model.ProductID">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="ProductName">Product Name:</label>
+                <div class="col-sm-10">
+                    <input autofocus class="form-control" id="ProductName" name="ProductName" placeholder="Product Name" type="text" value="@Model.ProductName">
+                    @Html.ValidationMessageFor(m => m.ProductName, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Category:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.CategoryID, SelectListHelper.Categories(), new
+                    {
+                        @class = "form-control"
+                    })
+                    @Html.ValidationMessageFor(m => m.CategoryID, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Supplier:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.SupplierID, SelectListHelper.Suppliers(), new
+                    {
+                        @class = "form-control"
+                    })
+                    @Html.ValidationMessageFor(m => m.SupplierID, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="unit">Unit:</label>
+                <div class="col-sm-10">
+                    <input autofocus class="form-control" id="unit" name="Unit" placeholder="Unit" type="text" value="@Model.Unit">
+                    @Html.ValidationMessageFor(m => m.Unit, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Price:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="Price" placeholder="Price" type="text" value="@Model.Price">
+                    @Html.ValidationMessageFor(m => m.Price, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Photo:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="uploadPhoto" onchange="document.getElementById('photo-img').src = window.URL.createObjectURL(this.files[0])" type="file" value="@Model.Photo" />
+                    @Html.ValidationMessageFor(m => m.Photo, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-sm-10">
+                    <img alt="@Model.ProductName" class="img img-bordered" id="photo-img" src="~/Photos/@Model.Photo" style="width:200px" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+                    <a class="btn btn-warning" href="~/product">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

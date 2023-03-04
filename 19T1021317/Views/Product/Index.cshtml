@@ -1,7 +1,70 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@model _19T1021317.Webs.Models.ProductSearchInput
+@using _19T1021317.Webs.Codes
+
+<div class="container-fluid box box-primary">
+    <div class="box-body">
+        <form id="formSearch" action="~/Product/Search">
+            <input type="hidden" name="PageSize" value="@Model.PageSize">
+            <div class="row">
+                <div class="col-sm-3">
+                     @Html.DropDownListFor(m => m.CategoryID, SelectListHelper.Categories(), new { @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                     @Html.DropDownListFor(m => m.SupplierID, SelectListHelper.Suppliers(), new { @class = "form-control" }) 
+                </div>
+                <div class="col-sm-6 input-group">
+                    <input type="text" name="searchValue"
+                           class="form-control"
+                           placeholder="Nhập tên mặt hàng cần tìm">
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat btn-info">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <a href="~/product/create"
+                           class="btn btn-flat btn-primary"
+                           style="margin-left:5px;">
+                            <i class="fa fa-plus"></i> Bổ sung
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </form>
+
+        <!--Kết quả tìm kiếm-->
+        <div id="searchResult"> </div>
+    </div>
+</div>
+
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#formSearch").submit(function (e) {
+                e.preventDefault();
+                doSearch(1);
+                return;
+            });
+            doSearch(@Model.Page);
+        })
+        function doSearch(page) {
+            var url = $("#formSearch").prop("action");
+            var postData = $("#formSearch").serializeArray();
+            postData.push({ "name": "page", "value": page });
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: postData,
+                error: function () {
+                    alert("Your request is not valid!");
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#searchResult").html(data);
+                }
+            });
+
+            return;
+        }
+    </script>
 }
-
-<h2>Index</h2>
-

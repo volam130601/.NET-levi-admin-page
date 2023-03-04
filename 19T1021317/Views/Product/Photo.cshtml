@@ -1,0 +1,73 @@
+﻿﻿@model _19T1021317.DomainModels.ProductPhoto
+@{ }
+
+<div class="box box-primary">
+    <div class="box-body">
+        <form action="~/Product/SavePhoto" class="form-horizontal" enctype="multipart/form-data" method="post">
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(m => m.PhotoID)
+            @Html.HiddenFor(m => m.ProductID)
+            <div class="form-group">
+                <label class="control-label col-sm-2">Photo:</label>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control" name="uploadPhoto" onchange="document.getElementById('photo-img').src = window.URL.createObjectURL(this.files[0])" />
+                    @Html.ValidationMessageFor(m => m.Photo, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                    @Html.HiddenFor(m => m.Photo)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-sm-10">
+                    <img alt="@Model.PhotoID" class="img img-bordered" id="photo-img" src="~/Photos/@Model.Photo" style="width:150px" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Description:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="Description" type="text" value="@Model.Description">
+                    @Html.ValidationMessageFor(m => m.Description, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Display Order:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="DisplayOrder" value="@Model.DisplayOrder">
+                    @Html.ValidationMessageFor(m => m.DisplayOrder, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-sm-10 checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.IsHidden)
+                        Hidden (Hide this photo for customers)
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+                    <a class="btn btn-warning" href="~/product/edit?id=@Model.ProductID">
+                        <i class="fa fa-ban"></i>
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

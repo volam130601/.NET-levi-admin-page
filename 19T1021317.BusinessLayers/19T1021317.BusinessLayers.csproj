@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AccountTypes.cs" />
     <Compile Include="CommonDataService.cs" />
+    <Compile Include="ProductDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserAccountService.cs" />
   </ItemGroup>
