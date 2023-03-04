@@ -1,65 +1,95 @@
 ﻿@model _19T1021317.DomainModels.Employee
-@using _19T1021317.Webs.Codes
+
+@{
+}
 
 <div class="box box-primary">
     <div class="box-body">
-        <form action="~/employee/save" method="post" class="form-horizontal">
-            @Html.AntiForgeryToken() <!--Chỉ thị mã hóa tránh fake dữ liệu-->
+        <form action="~/Employee/Save" class="form-horizontal" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
 
-            <div class="form-group">
-                <div class="col-sm-10">
-                    <input type="hidden" class="form-control" id="EmployeeID" name="EmployeeID" value="@Model.EmployeeID">
-                </div>
-            </div>
+            <input name="employeeId" type="hidden" value="@Model.EmployeeID">
             <div class="form-group">
                 <label class="control-label col-sm-2" for="firstName">First Name:</label>
                 <div class="col-sm-4">
-                    <input type="text" name="FirstName" class="form-control" id="firstName" value="@Model.FirstName" placeholder="Enter Supplier Name" autofocus>
-                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                    <input autofocus class="form-control" id="firstName" name="firstName" placeholder="Enter Supplier Name" type="text" value="@Model.FirstName">
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new
+                    {
+                        @class = "text-danger"
+                    })
                 </div>
                 <label class="control-label col-sm-2" for="lastName">Last Name:</label>
                 <div class="col-sm-4">
-                    <input type="text" name="LastName" class="form-control" id="lastName" value="@Model.LastName" placeholder="Enter Last Name">
-                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                    <input class="form-control" id="lastName" name="lastName" placeholder="Enter Last Name" type="text" value="@Model.LastName">
+                    @Html.ValidationMessageFor(m => m.LastName, "", new
+                    {
+                        @class = "text-danger"
+                    })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">Email:</label>
                 <div class="col-sm-10">
-                    <input type="email" name="Email" class="form-control" id="email" value="@Model.Email" placeholder="Enter Email">
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    <input class="form-control" id="email" name="email" placeholder="Enter Email" type="email" value="@Model.Email">
+                    @Html.ValidationMessageFor(m => m.Email, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="password">Password:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="password" name="password" placeholder="Enter Password" type="password" value="@Model.Password">
+                    @Html.ValidationMessageFor(m => m.Password, "", new
+                    {
+                        @class = "text-danger"
+                    })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="birthdate">Birthdate:</label>
                 <div class="col-sm-10">
-                    <input type="date" name="BirthDate" class="form-control" id="birthdate" value="@Model.BirthDate" placeholder="Enter Birthdate">
-                    @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
+                    <input class="form-control" id="birthdate" name="birthday" placeholder="Enter Birthdate" type="text" value="@($"{Model.BirthDate:dd/MM/yyyy}")">
+                    @Html.ValidationMessageFor(m => m.BirthDate, "", new
+                    {
+                        @class = "text-danger"
+                    })
+                    @Html.HiddenFor(employee => employee.BirthDate)
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="photo">Photo:</label>
                 <div class="col-sm-10">
-                    <input type="file" name="Photo" class="form-control" id="photo" value="@Model.Photo" placeholder="Enter Photo">
-                    @Html.ValidationMessageFor(m => m.Photo, "", new { @class = "text-danger" })
+                    <img id="photo-img" src="~/Photos/@Model.Photo" class="profile-user-img" alt="Employee image">
+                    <input class="form-control" id="photo" name="uploadPhoto" placeholder="Enter Photo" type="file" value="@Model.Photo"
+                           onchange="document.getElementById('photo-img').src = window.URL.createObjectURL(this.files[0])">
+                    @Html.HiddenFor(employee => employee.Photo)
+                    @Html.ValidationMessageFor(m => m.Photo, "", new
+                    {
+                        @class = "text-danger"
+                    })
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="note">Note:</label>
+                <label class="control-label col-sm-2" for="notes">Note:</label>
                 <div class="col-sm-10">
-                    <textarea name="Notes" class="form-control" value="@Model.Notes" id="note" style="min-height: 160px; resize: vertical" placeholder="Enter Note"></textarea>
-                    @Html.ValidationMessageFor(m => m.Notes, "", new { @class = "text-danger" })
+                    <textarea class="form-control" id="notes" name="notes" placeholder="Enter Note" style="min-height: 160px; resize: vertical">@Model.Notes</textarea>
+                    @Html.ValidationMessageFor(m => m.Notes, "", new
+                    {
+                        @class = "text-danger"
+                    })
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary">
+                    <button class="btn btn-primary" type="submit">
                         <i class="glyphicon glyphicon-floppy-disk"></i>
                         Save
                     </button>
 
-                    <a href="~/employee" class="btn btn-warning">
+                    <a href="~/Employee" class="btn btn-warning">
                         <i class="glyphicon glyphicon-log-out"></i>
                         Cancel
                     </a>

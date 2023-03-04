@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using _19T1021317.DomainModels;
 using _19T1021317.BusinessLayers;
 using _19T1021317.Webs.Models;
+using _19T1021317.Webs.Codes;
+using System.IO;
 
 namespace _19T1021317.Webs.Controllers
 {
@@ -58,7 +60,8 @@ namespace _19T1021317.Webs.Controllers
             ViewBag.Title = "Employee Create New";
             var data = new Employee()
             {
-                EmployeeID = 0
+                EmployeeID = 0,
+                BirthDate = new DateTime()
             };
             return View("Edit", data);
         }
@@ -99,33 +102,46 @@ namespace _19T1021317.Webs.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken] // atribute kiểm tra antitoken
-        public ActionResult Save(Employee employee)
+        public ActionResult Save(Employee employee, string birthday, HttpPostedFileBase uploadPhoto)
         {
+            var date = Converter.DMYStringToDateTime(birthday);
+            if (date == null)
+                ModelState.AddModelError("BirthDate", "Birth Date is invalid");
+            else
+                employee.BirthDate = date.Value;
+
             try
             {
                 if (string.IsNullOrWhiteSpace(employee.FirstName))
                     ModelState.AddModelError("FirstName", "First Name is required");
                 if (string.IsNullOrWhiteSpace(employee.LastName))
-                    ModelState.AddModelError("LastName", "LastName is required");
-                if (string.IsNullOrWhiteSpace(employee.BirthDate.ToString()))
-                    ModelState.AddModelError("BirthDate", "BirthDate is required");
-                if (string.IsNullOrWhiteSpace(employee.Photo))
-                    ModelState.AddModelError("Photo", "Photo is required");
-                if (string.IsNullOrWhiteSpace(employee.Notes))
-                    ModelState.AddModelError("Notes", "Notes is required");
+                    ModelState.AddModelError("LastName", "Last Name is required");
                 if (string.IsNullOrWhiteSpace(employee.Email))
                     ModelState.AddModelError("Email", "Email is required");
+                if (string.IsNullOrWhiteSpace(employee.Password))
+                    ModelState.AddModelError("Password", "Password is required");
+                if (string.IsNullOrWhiteSpace(employee.Notes))
+                    ModelState.AddModelError("Notes", "Notes is required");
+                if (string.IsNullOrWhiteSpace(employee.Photo))
+                    employee.Photo = "";
 
                 if (!ModelState.IsValid)
-                {
-                    ViewBag.Title = employee.EmployeeID == 0 ? "Employee | Create" : "Employee | Edit";
                     return View("Edit", employee);
+
+                if (uploadPhoto != null)
+                {
+                    var path = Server.MapPath("~/Photos");
+                    var fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}";
+                    var filePath = Path.Combine(path, fileName);
+                    uploadPhoto.SaveAs(filePath);
+                    employee.Photo = fileName;
                 }
 
                 if (employee.EmployeeID == 0)
                     CommonDataService.AddEmployee(employee);
                 else
                     CommonDataService.UpdateEmployee(employee);
+
                 return RedirectToAction("Index");
             }
             catch (Exception e)
