@@ -1,0 +1,87 @@
+﻿@using _19T1021317.BusinessLayers
+@model _19T1021317.Webs.Models.OrderSearchOutput
+
+@{
+    Layout = null;
+}
+
+<table class="table table-bordered table-hover table-striped" style="margin-top: 12px">
+    <thead class="bg-primary">
+        <tr class="bg-primary">
+            <th>Khách hàng</th>
+            <th>Ngày lập</th>
+            <th>Nhân viên phụ trách</th>
+            <th>Thời điểm duyệt</th>
+            <th>Người giao hàng</th>
+            <th>ngày nhận giao hàng</th>
+            <th>Thời điểm kết thúc</th>
+            <th>Trạng thái</th>
+            <th style="width:40px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Data)
+        {
+            <tr>
+                <td>@order.CustomerName</td>
+                <td>@(order.OrderTime.ToString("dd/MM/yyyy"))</td>
+                <td>@order.EmployeeFullName</td>
+                <td>@(order.AcceptTime?.ToString("dd/MM/yyyy"))</td>
+                <td>@order.ShipperName</td>
+                <td>@(order.ShippedTime?.ToString("dd/MM/yyyy"))</td>
+                <td>@(order.FinishedTime?.ToString("dd/MM/yyyy"))</td>
+                <td>@OrderDataService.GetOrderStatus(order.Status)</td>
+                <td>
+                    <a href="~/Order/Details/@order.OrderID" class="btn btn-info btn-xs">
+                        <i class="glyphicon glyphicon-th-list"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div style="display: flex; align-items: center; justify-content: space-between">
+    <div class="dataTables_info" id="pagination_info" role="status" aria-live="polite">
+        Showing @Model.From to @Model.To of @Model.TotalItems entries
+    </div>
+
+    <div class="dataTables_paginate paging_simple_numbers">
+        <ul class="pagination">
+            <li class="paginate_button previous@(Model.Page == 1 ? " disabled" : "")">
+                @if (Model.Page == 1)
+                {
+                    <a href="#" aria-controls="pagination" data-dt-idx="0" tabindex="0">Previous</a>
+                }
+                else
+                {
+                    <a href="javascript:" onclick="doSearch(@Model.Page - 1)" aria-controls="pagination" data-dt-idx="0" tabindex="0">Previous</a>
+                }
+            </li>
+            @for (var i = 1; i <= Model.PageCount; i++)
+            {
+                if (i == Model.Page)
+                {
+                    <li class="active">
+                        <a href="#">@i</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a onclick="doSearch(@i)" href="javascript:" aria-controls="pagination" data-dt-idx="@i" tabindex="0">@i</a>
+                    </li>
+                }
+            }
+            <li class="paginate_button next@(Model.Page == Model.PageCount ? " disabled" : "")" id="pagination_next">
+                @if (Model.Page == Model.PageCount)
+                {
+                    <a href="#" aria-controls="pagination" data-dt-idx="7" tabindex="0">Next</a>
+                }
+                else
+                {
+                    <a href="javascript:" onclick="doSearch(@Model.Page + 1)" aria-controls="pagination" data-dt-idx="@(Model.Page + 2)" tabindex="0">Next</a>
+                }
+            </li>
+        </ul>
+    </div>
+</div>

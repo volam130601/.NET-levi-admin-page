@@ -1,7 +1,64 @@
-﻿
+﻿@using _19T1021317.Webs.Codes
+@model _19T1021317.Webs.Models.OrderSearchInput
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Tra cứu đơn hàng";
 }
 
-<h2>Delete</h2>
+<div class="box box-primary">
+    <div class="box-body">
+        <!--Form đầu vào tìm kiếm-->
+        <form id="formSearch" action="~/Order/Search" method="post">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.DropDownListFor(o => o.OrderStatusId, SelectListHelper.OrderStatuses(), new
+                   {
+                       @class = "form-control",
+                       onchange = "doSearch(1)"
+                   })
+                </div>
+                <div class="col-sm-10 input-group">
+                    <input type="text" name="searchValue"
+                           class="form-control"
+                           placeholder="Tìm kiếm theo tên khách hàng hoặc tên người giao hàng">
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat btn-info">
+                            <i class="fa fa-search"></i> Tìm kiếm
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </form>
 
+        <div id="searchResult"></div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+    $(document).ready(function () {
+        $("#formSearch").submit(function (e) {
+            e.preventDefault();
+            doSearch(1);
+        });
+        doSearch(@Model.Page);
+    })
+    function doSearch(page) {
+        const url = $("#formSearch").prop("action");
+        const postData = $("#formSearch").serializeArray();
+        postData.push({ "name": "page", "value": page });
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: postData,
+            error: function () {
+                alert("Your request is not valid!");
+            },
+            success: function (data) {
+                $("#searchResult").html(data);
+            }
+        });
+    }
+    </script>
+}
