@@ -42,7 +42,7 @@
                     }
                     else
                     {
-                        <a href="~/category?page=@(Model.Page - 1)&searchValue=@Model.SearchValue" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+                        <a href="javascript:" onclick="doSearch(@Model.Page - 1)" aria-controls="pagination" data-dt-idx="0" tabindex="0">Previous</a>
                     }
                 </li>
                 @for (int i = 1; i <= Model.PageCount; i++)
@@ -56,7 +56,7 @@
                     else
                     {
                         <li class="paginate_button">
-                            <a href="~/category?page=@i&searchValue=@Model.SearchValue" aria-controls="example2" data-dt-idx="@i" tabindex="0">@i</a>
+                            <a onclick="doSearch(@i)" href="javascript:" aria-controls="pagination" data-dt-idx="@i" tabindex="0">@i</a>
                         </li>
                     }
                 }
@@ -67,7 +67,7 @@
                     }
                     else
                     {
-                        <a href="~/category?page=@(Model.Page + 1)&searchValue=@Model.SearchValue" aria-controls="example2" data-dt-idx="0" tabindex="0">Next</a>
+                        <a href="javascript:" onclick="doSearch(@Model.Page + 1)" aria-controls="pagination" data-dt-idx="@(Model.Page + 2)" tabindex="0">Next</a>
                     }
                 </li>
             </ul>

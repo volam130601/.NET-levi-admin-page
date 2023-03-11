@@ -104,6 +104,7 @@ namespace _19T1021317.Webs.Controllers
         /// <param name="productID"></param>
         /// <returns></returns>
         [Route("EditDetail/{orderID}/{productID}")]
+        [ValidateAntiForgeryToken]
         public ActionResult EditDetail(int orderID = 0, int productID = 0)
         {
             if (orderID == 0 || productID == 0)
@@ -134,7 +135,7 @@ namespace _19T1021317.Webs.Controllers
         /// <param name="productID"></param>
         /// <returns></returns>
         [Route("DeleteDetail/{orderID}/{productID}")]
-       [ValidateAntiForgeryToken] public ActionResult DeleteDetail(int orderID = 0, int productID = 0)
+        public ActionResult DeleteDetail(int orderID = 0, int productID = 0)
         {
             if (orderID == 0 || productID == 0)
                 return RedirectToAction("Index");

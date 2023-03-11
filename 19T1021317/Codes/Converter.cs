@@ -39,7 +39,5 @@ namespace _19T1021317.Webs.Codes
         {
             return JsonConvert.DeserializeObject<UserAccount>(cookie);
         }
-
-
     }
 }

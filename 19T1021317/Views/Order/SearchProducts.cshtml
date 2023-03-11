@@ -20,7 +20,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-3">
-                    <img alt="@item.ProductName" class="img img-responsive img-bordered" src="@(item.Photo.Contains("http") == true ? item.Photo : "~/Photos/"+item.Photo )">
+                    <img alt="@item.ProductName" class="img img-responsive img-bordered" src="@(item.Photo.Contains("http") == true ? item.Photo : "/Photos/"+item.Photo)">
                 </div>
                 <div class="col-sm-9">
                     <div class="form-group-sm">
